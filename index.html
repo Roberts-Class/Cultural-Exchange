@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taste of Taiwan | Cultural Exchange</title>
+    <title>Taste of Taiwan | Cultural Exchange 2026</title>
     
+    <!-- Tailwind CSS & Google Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Serif+TC:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Noto+Serif+TC:wght@700&display=swap" rel="stylesheet">
     
     <style>
+        /* Theme Color Variables */
         :root {
             --tw-red: #c91010;
             --tw-gold: #f5b041;
@@ -17,12 +19,13 @@
             --tw-night: #1a1a2e;
         }
 
+        /* Base Full-Screen No-Scroll Layout */
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             height: 100vh;
             width: 100vw;
-            overflow: hidden; /* STRICT NO-SCROLL */
+            overflow: hidden;
             background: linear-gradient(to bottom, var(--tw-dark) 0%, var(--tw-night) 100%);
             color: white;
             display: flex;
@@ -30,16 +33,24 @@
             position: relative;
         }
 
-        /* Pingxi Sky Lanterns Animation */
+        /* Floating Pingxi Sky Lanterns */
+        #lanterns-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
         .lantern {
             position: absolute;
             width: 30px;
             height: 45px;
             background: linear-gradient(to bottom, #ff7e5f, #feb47b);
             border-radius: 8px 8px 15px 15px;
-            box-shadow: 0 0 20px #ff7e5f, inset 0 -10px 15px rgba(255,255,255,0.5);
-            bottom: -50px;
-            opacity: 0.8;
+            box-shadow: 0 0 20px #ff7e5f, inset 0 -10px 15px rgba(255, 255, 255, 0.5);
+            bottom: -60px;
+            opacity: 0;
             animation: floatUp linear infinite;
             z-index: 1;
         }
@@ -60,12 +71,12 @@
 
         @keyframes floatUp {
             0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.9; }
-            90% { opacity: 0.9; }
-            100% { transform: translateY(-110vh) rotate(15deg); opacity: 0; }
+            10% { opacity: 0.85; }
+            90% { opacity: 0.85; }
+            100% { transform: translateY(-115vh) rotate(15deg); opacity: 0; }
         }
 
-        /* Background Silhouette (Taipei 101 & Mountains) */
+        /* Taipei 101 & Mountain Silhouette Backdrop */
         .skyline {
             position: absolute;
             bottom: 0;
@@ -77,26 +88,29 @@
             background-position: center bottom;
             z-index: 0;
             opacity: 0.9;
+            pointer-events: none;
             filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.05));
         }
 
-        /* Layout */
+        /* Main Page Wrapper */
         .app-container {
             position: relative;
             z-index: 10;
             display: flex;
             flex-direction: column;
             height: 100%;
-            padding: 1rem 2rem;
+            width: 100%;
+            padding: 1rem 2rem 0.75rem;
             box-sizing: border-box;
         }
 
+        /* Perfectly Centered Header with Equal-Width Flanking Logos */
         .header-layout {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: clamp(1rem, 3vw, 4rem);
-            margin-bottom: 1rem;
+            margin-bottom: 0.85rem;
             flex-shrink: 0;
             width: 100%;
         }
@@ -109,279 +123,352 @@
         }
 
         .header-img {
-            height: clamp(50px, 8vw, 90px);
-            width: clamp(50px, 8vw, 90px); /* Forces both images to take up equal width */
+            height: clamp(50px, 7vw, 85px);
+            width: clamp(50px, 7vw, 85px);
             object-fit: contain;
             filter: drop-shadow(0 0 15px rgba(245, 176, 65, 0.4));
+            flex-shrink: 0;
         }
 
         .header-img.flag {
             animation: magicFloat 4s ease-in-out infinite;
-            border-radius: 50%; /* This cuts off the fake checkerboard corners! */
+            border-radius: 50%;
+            object-fit: cover;
             background-color: transparent;
         }
 
         .header-img.logo {
-            animation: magicFloat 4s ease-in-out infinite 2s; /* Staggered animation */
+            animation: magicFloat 4s ease-in-out infinite 2s;
         }
 
         @keyframes magicFloat {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-10px) scale(1.08); filter: drop-shadow(0 0 25px rgba(245, 176, 65, 0.9)); }
+            0%, 100% {
+                transform: translateY(0px) scale(1);
+                filter: drop-shadow(0 0 15px rgba(245, 176, 65, 0.45));
+            }
+            50% {
+                transform: translateY(-8px) scale(1.06);
+                filter: drop-shadow(0 0 25px rgba(245, 176, 65, 0.9));
+            }
         }
 
         .title {
             font-family: 'Noto Serif TC', serif;
-            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-size: clamp(1.75rem, 4.2vw, 3.25rem);
             font-weight: 700;
             letter-spacing: 0.05em;
             color: var(--tw-gold);
-            text-shadow: 0 0 20px rgba(245, 176, 65, 0.5), 2px 2px 4px rgba(0,0,0,0.8);
+            text-shadow: 0 0 20px rgba(245, 176, 65, 0.5), 2px 2px 4px rgba(0, 0, 0, 0.8);
             margin: 0;
+            line-height: 1.1;
         }
         
         .subtitle {
-            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            font-size: clamp(0.8rem, 1.5vw, 1.1rem);
             color: #e2e8f0;
-            margin-top: 0.25rem;
-            letter-spacing: 0.2em;
+            margin-top: 0.2rem;
+            letter-spacing: 0.22em;
             text-transform: uppercase;
         }
 
         .school-name {
-            font-size: clamp(0.75rem, 1.5vw, 1rem);
+            font-size: clamp(0.7rem, 1.25vw, 0.95rem);
             color: var(--tw-gold);
-            margin-top: 0.25rem;
-            letter-spacing: 0.15em;
+            margin-top: 0.2rem;
+            letter-spacing: 0.16em;
             text-transform: uppercase;
             font-weight: 700;
-            opacity: 0.9;
+            opacity: 0.92;
         }
 
+        /* 4-4-3 Symmetrical Presentation Grid (11 Students) */
         .grid-container {
             flex-grow: 1;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(8, 1fr);
             grid-template-rows: repeat(3, 1fr);
-            gap: clamp(0.5rem, 2vw, 1.5rem);
+            gap: clamp(0.5rem, 1.3vw, 1.15rem);
             min-height: 0;
-            max-width: 1400px;
+            max-width: 1500px;
             margin: 0 auto;
             width: 100%;
-            align-content: center; /* Perfectly centers the grid vertically */
+            align-content: center;
         }
 
+        /* Subtle Breathing / Heartbeat Glow for Cards */
         @keyframes heartBeatGlow {
             0%, 100% {
                 transform: scale(1);
-                box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 5px rgba(245, 176, 65, 0.1);
-                border-color: rgba(245, 176, 65, 0.3);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 6px rgba(245, 176, 65, 0.15);
+                border-color: rgba(245, 176, 65, 0.35);
             }
             50% {
                 transform: scale(1.015);
-                box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 25px rgba(245, 176, 65, 0.6);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 24px rgba(245, 176, 65, 0.65);
                 border-color: var(--tw-gold);
             }
         }
 
         .student-card {
-            background: #111;
-            border: 2px solid rgba(245, 176, 65, 0.3);
+            grid-column: span 2;
+            background: #111827;
+            border: 2px solid rgba(245, 176, 65, 0.35);
             border-radius: 0.75rem;
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             display: flex;
-            align-items: flex-end;
-            animation: heartBeatGlow 3s infinite ease-in-out;
+            align-items: center;
+            justify-content: center;
+            animation: heartBeatGlow 3.2s infinite ease-in-out;
+            min-height: 0;
         }
 
+        /* Center the 3 cards on the bottom row (Columns 2-3, 4-5, 6-7) */
+        .student-card:nth-child(9) {
+            grid-column: 2 / span 2;
+        }
+
+        /* Hover State: Pause Heartbeat & Pop Up with Strong Glow */
         .student-card:hover {
-            transform: translateY(-5px) scale(1.04) !important;
-            border-color: var(--tw-gold) !important;
-            box-shadow: 0 0 40px rgba(245, 176, 65, 0.8) !important;
+            animation: none;
+            transform: translateY(-6px) scale(1.04);
+            border-color: #ffd166;
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.75), 0 0 32px rgba(245, 176, 65, 0.9);
             z-index: 20;
-            animation: none; /* Stops the beating on hover so it pops up smoothly */
         }
 
-        /* Image handling inside card */
         .student-img {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
-            z-index: 1;
+            display: block;
+            transition: transform 0.4s ease;
         }
 
         .student-card:hover .student-img {
-            transform: scale(1.1);
+            transform: scale(1.04);
         }
 
-        .iframe-modal {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(10, 10, 20, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-        }
-
-        .iframe-modal.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .modal-header {
-            width: 100%;
-            height: 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-            box-sizing: border-box;
-            background: linear-gradient(to right, #000, #1a1a2e, #000);
-            border-bottom: 1px solid var(--tw-gold);
-        }
-
-        .modal-presenter-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--tw-gold);
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 2.5rem;
-            line-height: 1;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        
-        .close-btn:hover { color: var(--tw-red); }
-
-        .iframe-container {
-            width: 100%;
-            flex-grow: 1;
-            position: relative;
-            background: #000;
-        }
-
-        /* Canva embeds usually have a specific aspect ratio, but we want to fill screen */
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 2;
-        }
-
-        /* Loading Spinner behind iframe */
-        .loading-spinner {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: var(--tw-gold);
-            font-size: 1.2rem;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(245, 176, 65, 0.2);
-            border-top: 4px solid var(--tw-gold);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
+        /* Footer Credits */
         .footer {
-            text-align: center;
-            padding-top: 1rem;
             flex-shrink: 0;
-            color: rgba(226, 232, 240, 0.6);
-            font-size: clamp(0.75rem, 1.5vw, 0.9rem);
-            letter-spacing: 0.1em;
+            text-align: center;
+            padding-top: 0.85rem;
+            padding-bottom: 0.2rem;
+            font-size: clamp(0.65rem, 1.1vw, 0.85rem);
+            color: rgba(226, 232, 240, 0.75);
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            z-index: 10;
         }
-        
+
         .footer span {
             color: var(--tw-gold);
             font-weight: 700;
         }
 
+        /* Fullscreen Presentation Modal Viewer */
+        .iframe-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(10, 10, 20, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+
+        .iframe-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.85rem 1.75rem;
+            flex-shrink: 0;
+        }
+
+        .modal-presenter-name {
+            font-family: 'Noto Serif TC', serif;
+            font-size: clamp(1.25rem, 2.5vw, 1.85rem);
+            font-weight: 700;
+            color: var(--tw-gold);
+            text-shadow: 0 0 12px rgba(245, 176, 65, 0.4);
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(245, 176, 65, 0.4);
+            color: #ffffff;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .close-btn:hover {
+            background: var(--tw-red);
+            border-color: var(--tw-red);
+            transform: rotate(90deg) scale(1.08);
+            box-shadow: 0 0 18px rgba(201, 16, 16, 0.7);
+        }
+
+        .iframe-container {
+            flex-grow: 1;
+            position: relative;
+            margin: 0 1.5rem 1.5rem;
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 2px solid rgba(245, 176, 65, 0.35);
+            background: #0d0d1a;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+        }
+
+        .loading-spinner {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            color: var(--tw-gold);
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            z-index: 1;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .spinner {
+            width: 44px;
+            height: 44px;
+            border: 4px solid rgba(245, 176, 65, 0.2);
+            border-top-color: var(--tw-gold);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        #canva-embed {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* Mobile Fallback Layout so cards stay tappable on phones */
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                height: auto;
+                min-height: 100vh;
+            }
+            .app-container {
+                padding: 1rem;
+            }
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto;
+                gap: 0.75rem;
+            }
+            .student-card {
+                grid-column: span 1 !important;
+                aspect-ratio: 16 / 9;
+            }
+            .student-card:last-child:nth-child(odd) {
+                grid-column: 1 / -1 !important;
+                max-width: 50%;
+                justify-self: center;
+                width: 100%;
+            }
+            .iframe-container {
+                margin: 0 0.75rem 0.75rem;
+            }
+        }
     </style>
 </head>
 <body>
-
-    <!-- Background Elements -->
-    <div class="skyline"></div>
+    <!-- Animated Sky Lanterns Layer -->
     <div id="lanterns-container"></div>
 
+    <!-- Taipei 101 & Mountains Silhouette -->
+    <div class="skyline"></div>
+
+    <!-- Main Content Layout -->
     <div class="app-container">
-        <!-- Header -->
-        <div class="header-layout">
-            <img src="images/Taiwan.png" alt="Taiwan Flag" class="header-img flag">
-            
-            <header class="header-text">
+        <!-- Header with Flag, Centered Title Block, and School Logo -->
+        <header class="header-layout">
+            <img src="images/Taiwan.png"
+                 alt="Taiwan Flag"
+                 class="header-img flag"
+                 onerror="this.onerror=null; this.src='https://placehold.co/120x120/c91010/ffffff?text=TW';">
+
+            <div class="header-text">
                 <h1 class="title">Taste of Taiwan</h1>
-                <p class="subtitle">Cultural Exchange 2026</p>
-                <p class="school-name">Dounan Senior High School</p>
-            </header>
+                <div class="subtitle">Cultural Exchange 2026</div>
+                <div class="school-name">Dounan Senior High School</div>
+            </div>
 
-            <img src="images/Dounan.png" alt="Dounan Senior High School Logo" class="header-img logo">
-        </div>
+            <img src="images/Dounan.png"
+                 alt="Dounan Senior High School Logo"
+                 class="header-img logo"
+                 onerror="this.onerror=null; this.src='https://placehold.co/120x120/1a1a2e/f5b041?text=DSHS';">
+        </header>
 
-        <!-- 3x3 Dynamic Grid -->
+        <!-- 4-4-3 Dynamic Student Grid -->
         <main id="student-grid" class="grid-container">
             <!-- JavaScript injects student cards here -->
         </main>
         
+        <!-- Teacher Credits Footer -->
         <footer class="footer">
             Guided by Teachers: <span>Robert R. Suquib</span>, <span>Lean Maglalang Batas</span>, and <span>Lin Chang Fu</span>
         </footer>
     </div>
 
-    <!-- Fullscreen Presentation Viewer -->
-    <div id="presentation-viewer" class="iframe-modal">
+    <!-- Fullscreen Presentation Viewer Modal -->
+    <div id="presentation-viewer" class="iframe-modal" role="dialog" aria-modal="true" aria-labelledby="presenter-name">
         <div class="modal-header">
             <div class="modal-presenter-name" id="presenter-name">Student Name</div>
-            <button id="close-viewer" class="close-btn">&times;</button>
+            <button id="close-viewer" class="close-btn" aria-label="Close presentation">&times;</button>
         </div>
         <div class="iframe-container">
-            <div class="loading-spinner">
+            <div class="loading-spinner" id="loading-status">
                 <div class="spinner"></div>
                 Loading Presentation...
             </div>
-            <!-- Iframe source will be updated by JavaScript -->
             <iframe id="canva-embed" src="" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
         </div>
     </div>
 
     <script>
-        // Array of students. 
-        // Edit the 'canvaEmbedLink' for each student with their real Canva embed URL.
-        // The Canva embed link usually looks like: "https://www.canva.com/design/XXXXX/view?embed"
+        /**
+         * Student presentation roster.
+         * Update `canvaEmbedLink` with each student's Canva embed URL (ending in /view?embed).
+         * Local cover images are loaded from the `images/` folder as `.png` files.
+         */
         const students = [
             { name: "Benson", imgPath: "images/Benson.png", canvaEmbedLink: "https://www.canva.com/design/DAHYVv3h7Z4/5meu1ZagvpZMhx8qoC20_w/view?embed" },
             { name: "Timmy", imgPath: "images/Timmy.png", canvaEmbedLink: "https://www.canva.com/design/DAHGTyb_p0s/vqJKa75zlk8HXgmUmBoWOw/view?embed" },
@@ -391,77 +478,117 @@
             { name: "Wendy", imgPath: "images/Wendy.png", canvaEmbedLink: "https://www.canva.com/design/DAHGQcC7ppM/4RlZckUsbiQTm5_aQVT6eg/view?embed" },
             { name: "Chirpy", imgPath: "images/Chirpy.png", canvaEmbedLink: "https://www.canva.com/design/DAHGT1dgk5s/eOGDcJI0V4Urng6vV4jlHA/view?embed" },
             { name: "Sara", imgPath: "images/Sara.png", canvaEmbedLink: "https://www.canva.com/design/DAHGT1btjL0/Z1DfEk1AnxF16SumnMvfdQ/view?embed" },
-            { name: "Zoey", imgPath: "images/Zoey.png", canvaEmbedLink: "https://www.canva.com/design/DAHGQeUI43Y/ai--QhpmJsB8PehG3GbcgQ/view?embed" }
+            { name: "Zoey", imgPath: "images/Zoey.png", canvaEmbedLink: "https://www.canva.com/design/DAHGQeUI43Y/ai--QhpmJsB8PehG3GbcgQ/view?embed" },
+            { name: "Lukas", imgPath: "images/Lukas.png", canvaEmbedLink: "" },
+            { name: "Danny", imgPath: "images/Danny.png", canvaEmbedLink: "" }
         ];
 
-        // DOM Elements
+        // DOM References
         const grid = document.getElementById('student-grid');
         const viewer = document.getElementById('presentation-viewer');
         const iframe = document.getElementById('canva-embed');
+        const loadingStatus = document.getElementById('loading-status');
         const presenterNameLabel = document.getElementById('presenter-name');
         const closeBtn = document.getElementById('close-viewer');
 
+        /**
+         * Renders all student cards into the grid with staggered glow animations
+         * and graceful image fallbacks.
+         */
         function renderGrid() {
-            students.forEach((student, index) => {
-                const card = document.createElement('div');
-                card.className = 'student-card';
-                card.style.animationDelay = `${index * 0.1}s`;
-                
-                // Fallback image logic: If the local image isn't found, it defaults to a nice placeholder
-                // Once you create the 'images' folder and put 'Benson.jpg' in it, the real image will show automatically.
-                const fallbackImgStr = `https://placehold.co/600x400/1a1a2e/f5b041?text=${student.name}`;
-                
-                card.innerHTML = `
-                    <img class="student-img" 
-                         src="${student.imgPath}" 
-                         alt="${student.name}" 
-                         onerror="this.onerror=null; this.src='${fallbackImgStr}';">
-                `;
-                
-                // Click opens embed directly
-                card.addEventListener('click', () => openPresentation(student));
-                
-                grid.appendChild(card);
-            });
+            try {
+                grid.innerHTML = '';
+                students.forEach((student, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'student-card';
+                    card.style.animationDelay = `${index * 0.15}s`;
+                    card.setAttribute('role', 'button');
+                    card.setAttribute('tabindex', '0');
+                    card.setAttribute('aria-label', `Open ${student.name}'s presentation`);
+                    
+                    // Fallback placeholder displays automatically if the local PNG is missing
+                    const fallbackImgStr = `https://placehold.co/600x340/1a1a2e/f5b041?text=${encodeURIComponent(student.name)}`;
+                    
+                    card.innerHTML = `
+                        <img class="student-img" 
+                             src="${student.imgPath}" 
+                             alt="${student.name}" 
+                             onerror="this.onerror=null; this.src='${fallbackImgStr}';">
+                    `;
+                    
+                    // Support both mouse click and keyboard activation
+                    card.addEventListener('click', () => openPresentation(student));
+                    card.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            openPresentation(student);
+                        }
+                    });
+                    
+                    grid.appendChild(card);
+                });
+            } catch (err) {
+                console.error('Error rendering student grid:', err);
+            }
         }
 
+        /**
+         * Opens the fullscreen presentation modal for the selected student.
+         */
         function openPresentation(student) {
-            presenterNameLabel.textContent = `${student.name}'s Presentation`;
-            
-            // Set iframe src to trigger loading
-            iframe.src = student.canvaEmbedLink;
-            
-            // Show viewer
-            viewer.classList.add('active');
+            try {
+                presenterNameLabel.textContent = `${student.name}'s Presentation`;
+
+                if (student.canvaEmbedLink) {
+                    loadingStatus.innerHTML = '<div class="spinner"></div>Loading Presentation...';
+                    iframe.style.display = 'block';
+                    iframe.src = student.canvaEmbedLink;
+                } else {
+                    loadingStatus.innerHTML = 'Presentation link coming soon!';
+                    iframe.style.display = 'none';
+                    iframe.src = 'about:blank';
+                }
+
+                viewer.classList.add('active');
+            } catch (err) {
+                console.error('Error opening presentation:', err);
+            }
         }
 
+        /**
+         * Closes the presentation modal and clears the iframe after the fade transition.
+         */
         function closePresentation() {
             viewer.classList.remove('active');
-            // Clear src to stop video/audio playing in background and reset load state
             setTimeout(() => {
-                iframe.src = "";
-            }, 400); // Wait for fade out transition
+                iframe.src = 'about:blank';
+            }, 350);
         }
 
-        // Event Listeners for closing
+        // Modal Close Listeners
         closeBtn.addEventListener('click', closePresentation);
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closePresentation();
+            if (e.key === 'Escape' && viewer.classList.contains('active')) {
+                closePresentation();
+            }
         });
 
+        /**
+         * Generates ambient floating Pingxi sky lanterns across the background.
+         */
         function generateLanterns() {
             const container = document.getElementById('lanterns-container');
-            const lanternCount = 15;
-            
-            for(let i = 0; i < lanternCount; i++) {
+            if (!container) return;
+
+            const lanternCount = 16;
+            for (let i = 0; i < lanternCount; i++) {
                 const lantern = document.createElement('div');
                 lantern.className = 'lantern';
                 
-                // Randomize position, size, and animation timing
                 const leftPos = Math.random() * 100;
-                const duration = 6 + Math.random() * 8; // Faster: 6s to 14s
-                const delay = Math.random() * 10; // Less delay: 0s to 10s
-                const scale = 0.5 + Math.random() * 0.8;
+                const duration = 7 + Math.random() * 8;
+                const delay = Math.random() * 10;
+                const scale = 0.5 + Math.random() * 0.75;
                 
                 lantern.style.left = `${leftPos}vw`;
                 lantern.style.animationDuration = `${duration}s`;
@@ -472,7 +599,7 @@
             }
         }
 
-        // Start Application
+        // Initialize Gallery on Page Load
         window.addEventListener('DOMContentLoaded', () => {
             renderGrid();
             generateLanterns();
